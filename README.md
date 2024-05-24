@@ -7,10 +7,10 @@ nfactorial incubator task
 - Скачайте zip-файл репозитория, или клонируйте репозиторий на свой ПК.
 - Открыв директорию /chef.in, создайте virtual environment, в терминале пишем команду python3 -m venv env
 - Если Windows, активируем virtual environment **env\Scripts\activate**, если Unix/MacOS, то **source env/bin/activate**
-- Затем, **pip install django**, и **pip install requests** - без requests библиотеки не заработает.
+- Затем, **pip install django**, и **pip install requests** - без requests библиотеки не заработает. (Или же одной командой - **pip install -r /path/to/requirements.txt**, path - заменить)
 - После установки Django, погружаемся на два уровня директория ниже, пишем **cd chef.in**, затем **cd chefin** (Путь должен выглядеть как \chef.in-main\chef.in\chefin\, нужно быть в директории с файлом manage.py)
 - Запускаем приложение командой **python manage.py runserver**
-- Приложение запустится по адресу стандартному адресу http://127.0.0.1:8000/.
+- Приложение запустится по стандартному адресу http://127.0.0.1:8000/.
 
 **Процесс проектирования:**
 Использовался Django/TailwindCSS/HTML/SQLite, а также Edamam Recipe Search API. Разработка шла по уровням, описанным в оригинальном таске. 
