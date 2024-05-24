@@ -1,0 +1,73 @@
+{% extends 'core/base.html' %}
+
+{% block title %} {{ recipe.label }} {% endblock %}
+
+{% block content %}
+
+<style>
+    .meal-type-container {
+        display: flex;
+        align-items: center;
+    }
+    .meal-type-label {
+        margin-right: 10px;
+    }
+    .meal-type-list {
+        display: flex;
+        gap: 10px;
+    }
+    .meal-type-list li {
+        list-style: none;
+    }
+</style>
+
+<script>
+    function copyURL() {
+        var url = window.location.href;
+
+        var tempInput = document.createElement("input");
+        tempInput.value = url;
+        document.body.appendChild(tempInput);
+
+        tempInput.select();
+        tempInput.setSelectionRange(0, 99999);
+
+        document.execCommand("copy");
+
+        document.body.removeChild(tempInput);
+
+        var shareBtn = document.getElementById("shareBtn");
+        shareBtn.textContent = "Link copied!";
+    }
+</script>
+
+
+<div class="grid grid-cols-2">
+    <div class="col-span-1">
+        <h1 class="mb-6 text-5xl font-semibold text-center">{{ recipe.label }}</h1>
+        <img src="{{ recipe.image }}" alt="{{ recipe.recipe.label }}" class="rounded-xl size-[34rem] ml-36">
+        <a href="{{ recipe.url }}" class="block text-center text-gray-500 hover:underline">Source: {{ recipe.source }}</a>
+    </div>
+
+    <div class="col-span-1 p-6 rounded-xl mt-10">
+        <p class="text-black font-semibold text-4xl meal-type-label mb-10">Meal type: {{ recipe.mealType }}</p>
+        <p class="text-black font-semibold text-4xl">Cuisine type: {{ recipe.cuisineType }}</p>
+    
+        <p class="text-black font-semibold text-4xl mt-10">Required ingredients:</p>
+        <ul style="list-style-type:disc" class="text-xl ml-5">
+            {% for ingredient in recipe.ingredients %}
+                <li>{{ ingredient }}</li>
+            {% endfor %}
+        </ul>
+
+        <p class="text-black font-semibold text-4xl mt-10">Total calorie count: {{ recipe.calories }}</p>
+
+        <a href="{{ recipe.url }}">
+            <button class="mt-10 px-6 py-3 text-3xl bg-transparent hover:bg-orange-500 text-orange-500 font-semibold hover:text-white border border-orange-500 hover:border-transparent rounded-xl hover:shadow-2xl">View recipe instructions</a>
+        </a>
+    </div>
+    <div id="app">
+        <button id="shareBtn" class=" ml-[22.1rem] bg-orange-500 hover:bg-white border border-orange-500 hover:text-orange-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="copyURL()">Share Recipe</button>
+    </div>
+</div>
+{% endblock %}

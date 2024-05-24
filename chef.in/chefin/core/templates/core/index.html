@@ -1,0 +1,114 @@
+{% extends 'core/base.html' %}
+
+{% block title %} Recipes {% endblock %}
+
+{% block content %}
+
+<h1 class="text-5xl font-semibold mt-6 mb-10">Results for {{ query }} recipes →</h1>
+
+<style>
+    .recipe-container {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        row-gap: 20px;
+        column-gap: 5px;
+        justify-items: center;
+    }
+
+    .recipe-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 16px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        width: 100%;
+        max-width: 300px;
+        height: 100%;
+    }
+
+    .recipe-item-content {
+        flex-grow: 1;
+    }
+
+    .recipe-item img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-top: 0px;
+    }
+
+    .recipe-item h2 {
+        font-size: 1.5em;
+        margin: 10px 0;
+    }
+
+    .recipe-item p {
+        font-size: 0.9em;
+        color: #555;
+    }
+
+    .recipe-item a {
+        font-size: 24px;
+        display: inline-block;
+        padding: 8px 16px;
+        color: #f97316;
+        text-decoration: none;
+        border-radius: 4px;
+    }
+
+    .recipe-item a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 1200px) {
+        .recipe-container {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (max-width: 900px) {
+        .recipe-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .recipe-container {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="recipe-container">
+    {% if recipes %}
+    {% for recipe in recipes %}
+    <div class="recipe-item">
+        <img src="{{ recipe.recipe.image }}" alt="{{ recipe.recipe.label }}">
+        <p>Source: {{ recipe.recipe.source }}</p>
+        <a href="{% url 'detail' recipe_id=recipe.recipe.recipe_id %}" target="_blank">{{ recipe.recipe.label }}</a>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>No recipes found.</p>
+    {% endif %}
+</div>
+<div class="text-center font-semibold text-xl mt-5">
+    <span>Page {{ current_page }}</span>
+    {% if total_pages > 1 %}
+            <div>
+                {% if current_page != 1 %}
+                    <a href="?query={{ query }}&page=1">&laquo; First page | </a>
+                    <a href="?query={{ query }}&page={{ current_page|add:"-1" }}">Previous page | </a>
+                {% endif %}
+                {% if current_page != total_pages %}
+                    <a href="?query={{ query }}&page={{ current_page|add:"1" }}">Next page &raquo;</a>
+                {% endif %}
+            </div>
+    {% endif %}
+</div>
+
+{% endblock %}
